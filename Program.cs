@@ -45,9 +45,20 @@ do
             cuartel.ListarOperadores();
             break;
         case 2:
-            Console.Write("Ingresa una localización: ");
-            string localizacion = Console.ReadLine();
-            //cuartel.ListarOperadoresEnLocalizacion(localizacion);
+            Console.Write("Ingresa la coordinada X: ");
+            string X = Console.ReadLine();
+            bool bandX = int.TryParse(X, out int coordx);
+
+            Console.Write("Ingresa la coordinada Y: ");
+            string Y = Console.ReadLine();
+            bool bandY = int.TryParse(Y, out int coordy);
+
+            if (bandY && bandX)
+            {
+                Localizacion lugar = new Localizacion(coordx, coordy);
+                cuartel.ListarOperadoresEnLocalizacion(lugar);
+            }
+            
             break;
         case 3:
             cuartel.TotalRecall();
@@ -71,14 +82,12 @@ do
                     case 'a':
                         
                         Console.Write("Ingresa la coordinada X: ");
-                        string CoordinadaX = Console.ReadLine();
-                        int coordx;
-                        bool bandX = int.TryParse(CoordinadaX, out coordx);
+                        X = Console.ReadLine();
+                        bandX = int.TryParse(X, out coordx);
 
                         Console.Write("Ingresa la coordinada Y: ");
-                        string CoordinadaY = Console.ReadLine();
-                        int coordy;
-                        bool bandY = int.TryParse(CoordinadaX, out coordy);
+                        Y = Console.ReadLine();
+                        bandY = int.TryParse(Y, out coordy);
 
                         if (bandY && bandX)
                         {

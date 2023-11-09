@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace ProyectoIntegrador
+﻿namespace ProyectoIntegrador
 {
     // Clase base Operador
     public abstract class Operador

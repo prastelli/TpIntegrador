@@ -54,7 +54,7 @@
         }
         public void ListarOperadoresEnLocalizacion(Localizacion localizacion)
         {
-            Console.WriteLine($"Operadores en la localización {localizacion}:");
+            Console.WriteLine($"Operadores en la localización {localizacion.ObtenerCoordenadas()}:");
             foreach (var operador in operadores)
             {
                 if (operador.MismaLocalizacion(localizacion))
