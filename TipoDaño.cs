@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace ProyectoIntegrador
 {
-    public interface IOperadorFactory
+    public enum TipoDaño
     {
-        Operador CrearOperador(TipoOperador tipo, Cuartel cuartel);
+        MotorComprometido,
+        ServoAtascado,
+        BateriaPerforada,
+        PuertoBateriaDesconectado,
+        PinturaRayada
     }
 }

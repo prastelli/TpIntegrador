@@ -8,8 +8,8 @@ namespace ProyectoIntegrador
 {
     public enum TipoOperador
     {
-        UAV = 4000,
-        K9 = 6500,
-        M8 = 12250
+        UAV,
+        K9,
+        M8 
     }
 }

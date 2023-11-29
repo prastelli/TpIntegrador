@@ -1,28 +1,33 @@
 ﻿using ProyectoIntegrador;
 
-CuartelGeneral cuartel = new CuartelGeneral();
+/*
+*  TP Integrador Pablo Rastelli - En Solitario
+*  Gracias por tanto, perdón por tan poco.....
+*/
 
-// Crear operadores
-UAV drone1 = new UAV();
-K9 k91 = new K9();
-M8 m81 = new M8();
+Console.WriteLine("¿Desea cargar una simulación previa? (S/N)");
+string respuesta = Console.ReadLine().ToUpper();
 
-IOperadorFactory Op = new OperadorFactory();
+if (respuesta == "S")
+{
+    // La clase Helpers tiene 2 metodos uno para serializar y otro para deserializar. 
+    // La deserializacion falla 
+}
 
-// Prueba de implementacion de Patron Factory
-Operador Operador1 = Op.CrearOperador("UAV");
-Operador Operador2 = Op.CrearOperador("K9");
-Operador Operador3= Op.CrearOperador("M8");
+Terreno Mundo = Terreno.GetInstance();
+
+//InicializarMapa: (Tamaño Terreno - Cant. Sitios Reciclaje - Cant. Cuarteles - Cant. Vertederos)  
+Mundo.InicializarMapa(100, 5, 3, 1000);
+Mundo.MostrarMapa();
+
+Cuartel cuartel = new(Mundo);
+
+cuartel.CrearOperadores(10, cuartel);
 
 
-// Agregar operadores al cuartel
-cuartel.AgregarOperador(drone1);
-cuartel.AgregarOperador(k91);
-cuartel.AgregarOperador(m81);
-cuartel.AgregarOperador(Operador1);
-cuartel.AgregarOperador(Operador2);
-cuartel.AgregarOperador(Operador3);
-
+/*
+ *  Se tendria que usar el patron command, pero no lo entendi bien y no lo pude aplicar.
+ */
 
 // Menú de opciones
 int opcion;
@@ -35,7 +40,8 @@ do
     Console.WriteLine("4. Seleccionar un operador en específico");
     Console.WriteLine("5. Agregar operador a la reserva");
     Console.WriteLine("6. Remover operador de la reserva");
-    Console.WriteLine("7. Salir");
+    Console.WriteLine("7. Backup de Mapa y Operadores");
+    Console.WriteLine("8. Salir");
     Console.Write("Selecciona una opción: ");
     opcion = int.Parse(Console.ReadLine());
 
@@ -57,8 +63,7 @@ do
             {
                 Localizacion lugar = new Localizacion(coordx, coordy);
                 cuartel.ListarOperadoresEnLocalizacion(lugar);
-            }
-            
+            }            
             break;
         case 3:
             cuartel.TotalRecall();
@@ -71,10 +76,12 @@ do
             Operador operadorSeleccionado = cuartel.SeleccionarOperador(idOperador);
             if (operadorSeleccionado != null)
             {
-                Console.WriteLine($"Operador seleccionado: ID: {operadorSeleccionado.DevolverId()}");
+                Console.WriteLine($"Operador seleccionado: ID: {operadorSeleccionado.iD}");
                 Console.WriteLine("a. Enviar a una localización en especial");
                 Console.WriteLine("b. Indicar retorno al cuartel");
                 Console.WriteLine("c. Cambiar estado a STANDBY");
+                Console.WriteLine("d. Cambiar estado a STANDBY");
+                Console.WriteLine("e. Cambiar bateria");
                 Console.Write("Selecciona una opción: ");
                 char opcionOperador = char.Parse(Console.ReadLine().ToLower());
                 switch (opcionOperador)
@@ -100,11 +107,17 @@ do
                         }
                         break;
                     case 'b':
-                        operadorSeleccionado.VolverAlCuartel(cuartel.DevolverLocalizacion());
+                        operadorSeleccionado.Mover(operadorSeleccionado.cuartel.Localizacion);
                         break;
                     case 'c':
                         operadorSeleccionado.CambiarEsatado(Estado.Standby);
-                        Console.WriteLine($"{operadorSeleccionado.DevolverId()} está ahora en estado STANDBY.");
+                        Console.WriteLine($"{operadorSeleccionado.iD} está ahora en estado STANDBY.");
+                        break;
+                    case 'd':
+                        operadorSeleccionado.BateriaNueva();                        
+                        break;
+                    case 'e':
+                        operadorSeleccionado.bateria.cargarBateria();
                         break;
                     default:
                         Console.WriteLine("Opción no válida.");
@@ -143,10 +156,16 @@ do
             }
             break;
         case 7:
+            Helpers.SerializarCuartel(cuartel);            
+            Helpers.SerializarMapa(Mundo);
+
+            break;
+        case 8:
             Console.WriteLine("Saliendo del programa.");
             break;
         default:
             Console.WriteLine("Opción no válida.");
             break;
     }
-} while (opcion != 7);
+} while (opcion != 8);
+

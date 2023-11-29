@@ -1,46 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProyectoIntegrador
+﻿namespace ProyectoIntegrador
 {
     public class Localizacion
     {
-        public int X;
-        public int Y;
+        int X;
+        int Y;
 
-        public Localizacion() { }
+        public int X1 { get => X; set => X = value; }
+        public int Y1 { get => Y; set => Y = value; }
 
         public Localizacion(int x, int y)
         {
-            X = x;
-            Y = y;
-        }
+            X1 = x;
+            Y1 = y;
+         }
 
         public void InicializarLocalizacion(int x, int y)
         {
-            X = x;
-            Y = y;
+            X1 = x;
+            Y1 = y;
         }
         public int DevolverX() 
         {
-            return X;
+            return X1;
         }
         public int DevolverY()
         {
-            return Y;
+            return Y1;
         }
 
         public string ObtenerCoordenadas()
         {
-            return $"({X},{Y})";
+            return $"({X1},{Y1})";
         }
         public int CalcularDistanciaAOtroDestino(Localizacion destino)
         {
-            int x = Math.Abs(destino.X - X);
-            int y = Math.Abs(destino.Y - Y);
+            int x = Math.Abs(destino.X1 - X1);
+            int y = Math.Abs(destino.Y1 - Y1);
             return (int)Math.Sqrt(x * x + y * y);
         }
     }
