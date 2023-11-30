@@ -48,9 +48,9 @@
 
         public virtual void Mover(Localizacion destino)
         {
-            /* 
-              * Rutinas para unidades que NO tienen que rodear un obstaculo
-             */
+            /*
+            * Rutinas para unidades que SI tienen que esquivar obstaculos
+            */
             int xOp, yOp;
             int xDe, yDe;
             int distancia = localizacion.CalcularDistanciaAOtroDestino(destino);
@@ -64,35 +64,52 @@
             xDe = destino.X1;
             yDe = destino.Y1;
 
+
             int x = xOp < xDe ? 1 : -1;
             int y = yOp < yDe ? 1 : -1;
+
 
             // Se mueve por el eje x hasta llegar al eje x destino
             while (localizacion.X1 < xDe)
             {
                 localizacion.X1 += x;
 
-                TipoLocalizacion tipoLocalizacion = cuartel.Mapa1.TipoTerrenoPorCoordenadas(localizacion.X1, yOp);
+                TipoLocalizacion tipoLocalizacionX = cuartel.Mapa1.TipoTerrenoPorCoordenadas(localizacion.X1, localizacion.Y1);
 
-                if (tipoLocalizacion == TipoLocalizacion.Vertedero)
+                if (tipoLocalizacionX == TipoLocalizacion.Lago)
+                {
+                    throw new Exception("El Operador no puede moverse en el aguaaaaa");
+                }
+
+                if (tipoLocalizacionX == TipoLocalizacion.Vertedero)
                 {
                     HayDaño();
                 }
+
+                if (tipoLocalizacionX == TipoLocalizacion.VertederoElectronico)
+                {
+                    bateria.SetearCargaBateria(bateria.BateriaActual * 20 / 100);
+                }
             }
 
-            // Se mueve por el eje x hasta llegar al eje x destino
+            // Se mueve por el eje y hasta llegar al eje y destino
             while (localizacion.Y1 < yDe)
             {
                 localizacion.Y1 += y;
 
-                TipoLocalizacion tipoLocalizacion = cuartel.Mapa1.TipoTerrenoPorCoordenadas(localizacion.X1, yOp);
+                TipoLocalizacion tipoLocalizacionY = cuartel.Mapa1.TipoTerrenoPorCoordenadas(localizacion.X1, localizacion.Y1);
 
-                if (tipoLocalizacion == TipoLocalizacion.Vertedero)
+                if (tipoLocalizacionY == TipoLocalizacion.Lago)
+                {
+                    throw new Exception("El Operador no puede moverse en el aguaaaaa");
+                }
+
+                if (tipoLocalizacionY == TipoLocalizacion.Vertedero)
                 {
                     HayDaño();
                 }
 
-                if (tipoLocalizacion == TipoLocalizacion.VertederoElectronico)
+                if (tipoLocalizacionY == TipoLocalizacion.VertederoElectronico)
                 {
                     bateria.SetearCargaBateria(bateria.BateriaActual * 20 / 100);
                 }

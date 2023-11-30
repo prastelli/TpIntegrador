@@ -11,7 +11,8 @@ string respuesta = Console.ReadLine().ToUpper();
 if (respuesta == "S")
 {
     // La clase Helpers tiene 2 metodos uno para serializar y otro para deserializar. 
-    // La deserializacion falla 
+    // La serializacion funciona bien, pero la deserializacion falla. 
+    // Probe cambiando al paquete Newtonsoft pero tiene el mismo problema.
 }
 
 Terreno Mundo = Terreno.GetInstance();
